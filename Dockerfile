@@ -40,6 +40,7 @@ RUN set -x && \
         fuse \
         smbnetfs \
         rsnapshot \
+        iputils-ping \
     && \
     # Cleanup
     apt-get clean autoclean && \
