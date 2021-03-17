@@ -87,7 +87,7 @@ if [[ -f ~/remote ]]; then
 fi
 
 # Create symbolic link for 'easy-access' to the remote share
-ln -s ~/share/$hostname/ ~/remote
+ln -s ~/shares/$hostname/ ~/remote
 
 msg "Mounted remote location"
 msg "You can access your shares in: /data/remote/<share name>"
