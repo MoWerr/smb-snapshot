@@ -132,5 +132,10 @@ finish_cron_file
 # Enable crontab file
 crontab ~/cron-tasks
 
+# Create log file up-frot if it doesn't exist
+if [[ ! -f ~/destination/rsnapshot.log ]]; then
+    touch ~/destination/rsnapshot.log
+fi
+
 # Display current log file on output
 tail -f ~/destination/rsnapshot.log
