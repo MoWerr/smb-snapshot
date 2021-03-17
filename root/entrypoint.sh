@@ -28,7 +28,7 @@ function add_backup {
 # Adds cron entry to the crontab file
 function add_cron_entry {
     if [[ ! -z $2 && $2 > 0 && ! -z $3 ]]; then
-        echo "$3 rsnapshot -c ~/rsnapshot.conf $1" >> ~/cron-tasks
+        echo "$3 /usr/bin/rsnapshot -c /data/rsnapshot.conf $1" >> ~/cron-tasks
         msg "Added $1 cron entry"
     fi
 }
