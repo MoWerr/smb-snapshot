@@ -83,7 +83,7 @@ fi
 
 # Remove 'easy-access' link from previous runs
 if [[ -f ~/remote ]]; then
-    rm ~/remote
+    rm -rf ~/remote
 fi
 
 # Create symbolic link for 'easy-access' to the remote share
