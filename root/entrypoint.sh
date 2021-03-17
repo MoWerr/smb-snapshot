@@ -21,8 +21,13 @@ function add_retain {
 
 # Adds backup entry to the rsnapshot configuration file
 function add_backup {
-    echo -e "backup\t/data/remote/$1\tlocalhost/" >> ~/rsnapshot.conf
-    msg "Added '$1' backup location to the rsnapshot configuration"
+    if [[ -d "/data/remote/$1" ]]; then
+        echo -e "backup\t/data/remote/$1\tlocalhost/" >> ~/rsnapshot.conf
+        msg "Added '$1' backup location to the rsnapshot configuration"
+    else
+        err "Couldn't access '$1' share"
+        exit 1
+    fi
 }
 
 # Adds cron entry to the crontab file
