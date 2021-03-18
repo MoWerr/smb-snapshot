@@ -37,8 +37,6 @@ ENV HOSTNAME="" \
 RUN set -x && \
     apt-get update && \
     DEBIAN_FRONTEND="noninteractive" apt-get install -y --no-install-recommends \
-        fuse \
-        smbnetfs \
         rsnapshot \
         iputils-ping \
     && \

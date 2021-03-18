@@ -1,2 +1,2 @@
 #!/bin/bash
-docker run --cap-add SYS_ADMIN --device /dev/fuse --security-opt apparmor:unconfined "$@" mowerr/smb-snapshot
+docker run --cap-add SYS_ADMIN --security-opt apparmor:unconfined "$@" smb
