@@ -31,7 +31,6 @@ function mount_share {
 
 # Create directory for all mounted shares
 check_dir /data/shares
-chown -R husky /data/shares
 
 # Read secrets
 hostname=$(read_secret hostname)
@@ -58,6 +57,9 @@ IFS=$DELIMITER read -ra shares_array <<< "$SHARES"
 for share_dir in "${shares_array[@]}"; do
     mount_share "$hostname" "$username" "$password" "$share_dir"
 done
+
+# All shares should be owned by non-root user
+chown -R husky /data/shares
 
 ## We need to start cron while still being the root
 cron start
