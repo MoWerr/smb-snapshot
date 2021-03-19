@@ -19,7 +19,7 @@ function wait_for_host {
 # Mounts given share
 function mount_share {
     check_dir /data/shares/"$4"
-    mount -t cifs -o username="$2",password="$3" //"$1"/"$4" /data/shares/"$4"
+    mount -t cifs -o username="$2",password="$3",uid=$(id husky -u),gid=$(id husky -g) //"$1"/"$4" /data/shares/"$4"
 
     if [[ $? != 0 ]]; then
         err "Failed to mount '$4' share"
@@ -57,9 +57,6 @@ IFS=$DELIMITER read -ra shares_array <<< "$SHARES"
 for share_dir in "${shares_array[@]}"; do
     mount_share "$hostname" "$username" "$password" "$share_dir"
 done
-
-# All shares should be owned by non-root user
-chown -R husky /data/shares
 
 ## We need to start cron while still being the root
 cron start
