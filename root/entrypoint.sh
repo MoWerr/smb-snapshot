@@ -74,7 +74,9 @@ if [[ -f ~/destination/rsnapshot.log ]]; then
 fi
 
 # Create log file up-front
-touch ~/destination/rsnapshot.log
+if [[ ! -f ~/destination/rsnapshot.log ]]; then
+    touch ~/destination/rsnapshot.log
+fi
 
 # Display current log file on output
 tail -f ~/destination/rsnapshot.log
