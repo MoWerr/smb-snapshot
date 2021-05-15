@@ -11,7 +11,7 @@ function add_retain {
 
 # Adds backup entry to the rsnapshot configuration file
 function add_backup {
-    echo -e "backup\t/data/shares/./$1/\t." >> /etc/rsnapshot/rsnapshot.conf
+    echo -e "backup\t/mnt/shares/./$1/\t." >> /etc/rsnapshot/rsnapshot.conf
     msg "Added '$1' backup location to the rsnapshot configuration"
 }
 

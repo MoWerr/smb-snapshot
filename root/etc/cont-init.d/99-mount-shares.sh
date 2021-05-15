@@ -13,8 +13,8 @@ function read_secret {
 
 # Mounts given share
 function mount_share {
-    check_dir /data/shares/"$4"
-    mount -t cifs -o username="$2",password="$3",uid=$(id husky -u),gid=$(id husky -g) //"$1"/"$4" /data/shares/"$4"
+    check_dir /mnt/shares/"$4"
+    mount -t cifs -o username="$2",password="$3",uid=$(id husky -u),gid=$(id husky -g) //"$1"/"$4" /mnt/shares/"$4"
 
     if [[ $? != 0 ]]; then
         err "Failed to mount '$4' share"
@@ -30,7 +30,7 @@ function wait_for_host {
 }
 
 # Create directory for all mounted shares
-check_dir /data/shares
+check_dir /mnt/shares
 
 # Read secrets
 hostname=$(read_secret hostname)

@@ -36,7 +36,4 @@ RUN set -x && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
-# Define volume for generated snapshots
-VOLUME ["/data/destination"]
-
 COPY root/ /
