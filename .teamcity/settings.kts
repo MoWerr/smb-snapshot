@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCommand
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
 /*
@@ -25,20 +26,50 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 
 version = "2020.2"
 
-project {
+val projectName = "smb-snapshot"
 
-    buildType(Build)
+project {
+    buildType(BuildDockerImage)
 }
 
-object Build : BuildType({
+object BuildDockerImage : BuildType({
     name = "Build"
 
     vcs {
         root(DslContext.settingsRoot)
     }
 
+    steps {
+        dockerCommand {
+            name = "Build image"
+            commandType = build {
+                source = file {
+                    path = "Dockerfile"
+                }
+                namesAndTags = "mowerr/${projectName}:latest"
+                commandArgs = "--pull"
+            }
+            param("dockerImage.platform", "linux")
+        }
+
+        dockerCommand {
+            name = "Push image"
+            commandType = push {
+                namesAndTags = "mowerr/${projectName}:latest"
+            }
+        }
+    }
+
     triggers {
         vcs {
+            branchFilter = "+:<default>"
+        }
+    }
+
+    dependencies {
+        snapshot(AbsoluteId("UbuntuBase_Stable_Build")) {
+            runOnSameAgent = true
+            onDependencyFailure = FailureAction.FAIL_TO_START
         }
     }
 })
