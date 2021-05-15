@@ -40,3 +40,7 @@ add_retain "yearly" "$YEARLY_SNAPSHOTS" "$YEARLY_CRON"
 
 # Make sure that default user has access to the rsnapshot config file
 chown husky:husky /etc/rsnapshot/rsnapshot.conf
+
+# Make sure that default user has access to the temp directory
+check_dir /tmp/rsnapshot
+chown -R husky:husky /tmp/rsnapshot
