@@ -1,5 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
-import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.dockerCommand
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.exec
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
 /*
@@ -38,23 +38,10 @@ object BuildDockerImage : BuildType({
     }
 
     steps {
-        dockerCommand {
+        exec {
             name = "Build image"
-            commandType = build {
-                source = file {
-                    path = "Dockerfile"
-                }
-                namesAndTags = "mowerr/smb-snapshot:latest"
-                commandArgs = "--pull"
-            }
-            param("dockerImage.platform", "linux")
-        }
-
-        dockerCommand {
-            name = "Push image"
-            commandType = push {
-                namesAndTags = "mowerr/smb-snapshot:latest"
-            }
+            path = "build.sh"
+            formatStderrAsError = true
         }
     }
 
