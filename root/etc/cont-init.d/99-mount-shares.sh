@@ -24,6 +24,11 @@ function mount_share {
     msg "Mounted '$4' share"
 }
 
+# Waits for given hostname
+function wait_for_host {
+    ping -c 2 -w 60 -q "$1" &> /dev/null
+}
+
 # Create directory for all mounted shares
 check_dir /data/shares
 
@@ -35,6 +40,15 @@ password=$(read_secret password)
 # Check for required 'hostname' parameter
 if [[ -z $hostname ]]; then
     err "Required parameter 'hostname' was not provided"
+    exit 1
+fi
+
+# Wait for host. It may be useful when running this container along others with docker-compose
+msg "Waiting for hostname to be reachable"
+wait_for_host "$hostname"
+
+if [[ $? != 0 ]]; then
+    err "Provided hostname is unreachable"
     exit 1
 fi
 
