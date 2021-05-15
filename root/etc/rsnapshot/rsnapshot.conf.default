@@ -8,5 +8,5 @@ cmd_logger	/usr/bin/logger
 verbose		2
 loglevel	3
 logfile	/data/rsnapshot.log
-lockfile	/var/run/rsnapshot.pid
+lockfile	/data/temp/rsnapshot.pid
 link_dest	0
