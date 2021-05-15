@@ -20,6 +20,8 @@ if [[ -f /etc/crontabs/husky ]]; then
     msg "Removed old crontab file"
 fi
 
+touch /etc/crontabs/husky
+
 # Add all cron entries
 add_cron_entry "hourly" "$HOURLY_SNAPSHOTS" "$HOURLY_CRON"
 add_cron_entry "daily" "$DAILY_SNAPSHOTS" "$DAILY_CRON"
