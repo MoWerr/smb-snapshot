@@ -26,8 +26,6 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 
 version = "2020.2"
 
-val projectName = "smb-snapshot"
-
 project {
     buildType(BuildDockerImage)
 }
@@ -46,7 +44,7 @@ object BuildDockerImage : BuildType({
                 source = file {
                     path = "Dockerfile"
                 }
-                namesAndTags = "mowerr/${projectName}:latest"
+                namesAndTags = "mowerr/smb-snapshot:latest"
                 commandArgs = "--pull"
             }
             param("dockerImage.platform", "linux")
@@ -55,7 +53,7 @@ object BuildDockerImage : BuildType({
         dockerCommand {
             name = "Push image"
             commandType = push {
-                namesAndTags = "mowerr/${projectName}:latest"
+                namesAndTags = "mowerr/smb-snapshot:latest"
             }
         }
     }
