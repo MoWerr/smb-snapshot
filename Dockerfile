@@ -1,14 +1,5 @@
 FROM mowerr/ubuntu-base:20.04
 
-# Default user and user group will be adapted to those values
-ARG UID=1000
-ARG GID=1000
-
-# Adapt UID and GID values
-RUN set -x && \
-    usermod -o -u ${UID} husky && \
-    groupmod -o -g ${GID} husky
-
 # Variables for smb authentication
 # Those values can be supplied via docker secrets instead
 ENV HOSTNAME="" \
