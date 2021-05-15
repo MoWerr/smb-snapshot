@@ -14,13 +14,14 @@ function finish_cron_file {
     echo "# This line makes a valid cron" >> /etc/crontabs/husky
 }
 
+# Check if directory for crontab file exists
+check_dir /etc/crontabs
+
 # Remove old crontab file from previous run
 if [[ -f /etc/crontabs/husky ]]; then
     rm /etc/crontabs/husky
     msg "Removed old crontab file"
 fi
-
-touch /etc/crontabs/husky
 
 # Add all cron entries
 add_cron_entry "hourly" "$HOURLY_SNAPSHOTS" "$HOURLY_CRON"
