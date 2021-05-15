@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv bash
+source /common.sh
+
+if [[ -f /var/run/crond.pid ]]; then
+  rm -f /var/run/crond.pid
+  msg "Removed old cron lock file"
+fi
+
+crontab -u husky /etc/crontabs/husky
+
+if [[ $? == 0 ]]; then
+  msg "Crontab registered"
+else
+  err "Crontab couldn't be registered"
+  exit 1
+fi
+
+msg "Starting cron"
+cron -f -l

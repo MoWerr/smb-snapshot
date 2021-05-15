@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 source /common.sh
 
 # Reads docker secret of given name (falls back to environment variables)
@@ -9,11 +9,6 @@ function read_secret {
         local env_name=${1^^}
         echo ${!env_name}
     fi
-}
-
-# Waits for given hostname
-function wait_for_host {
-    ping -c 2 -w 60 -q "$1" &> /dev/null
 }
 
 # Mounts given share
@@ -39,16 +34,7 @@ password=$(read_secret password)
 
 # Check for required 'hostname' parameter
 if [[ -z $hostname ]]; then
-    err "Required parameter 'hostname' was not provided."
-    exit 1
-fi
-
-# Wait for host. It may be useful when running this container along others with docker-compose
-msg "Waiting for hostname to be reachable"
-wait_for_host "$hostname"
-
-if [[ $? != 0 ]]; then
-    err "Provided hostname is unreachable"
+    err "Required parameter 'hostname' was not provided"
     exit 1
 fi
 
@@ -57,6 +43,3 @@ IFS=$DELIMITER read -ra shares_array <<< "$SHARES"
 for share_dir in "${shares_array[@]}"; do
     mount_share "$hostname" "$username" "$password" "$share_dir"
 done
-
-## We need to start cron while still being the root
-cron start
